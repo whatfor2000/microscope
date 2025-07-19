@@ -20,14 +20,14 @@ const serialInput = () => {
 
     return (
             <form onSubmit={handleSubmit} className='flex mx-4 my-4 gap-4'>
-                <label htmlFor="price" className="block text-sm/6 font-medium text-white">Serial Number</label> 
+                <label htmlFor="serial" className="block text-4xl font-medium text-white">Serial Number</label> 
                 <input
-                    className='outline-1 outline-amber-50 rounded-2xl px-2'
+                    className='outline-1 outline-amber-50 rounded-2xl px-2 text-4xl'
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                 />
-                <button type="submit" className='outline-1 outline-amber-50 px-2 rounded-2xl cursor-pointer hover:bg-gray-500'>Submit</button>
+                <button type="submit" className='outline-1 outline-amber-50 text-4xl px-2 rounded-2xl cursor-pointer hover:bg-gray-500'>Submit</button>
             </form>
     );
 };
