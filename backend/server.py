@@ -1,4 +1,4 @@
-from flask import Flask, Response, jsonify, request
+from flask import Flask, Response, jsonify, request,render_template
 from flask_cors import CORS
 import os
 from datetime import datetime
@@ -20,6 +20,11 @@ def generate_frames():
         frame_bytes = buffer.tobytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
+
+@app.route('/')
+def home():
+    return render_template('index.html')  # Renders index.html from the templates folder
+
 
 #Server Stream the Camera to Frontend
 @app.route('/video_feed')

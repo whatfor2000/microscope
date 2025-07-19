@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam Capture</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        video { border: 1px solid black; width: 100%; max-width: 960px; }
+        #videoFeed { width: 100%; max-width: 960px; }
+    </style>
+</head>
+<body>
+    <h1>Webcam Capture</h1>
+    <input type="text" id="serialInput" placeholder="Enter Serial Number" />
+    <br><br>
+    <img id="videoFeed" src="/video_feed" alt="Webcam Feed" />
+    <br>
+    <button id="captureButton">Capture</button>
+    <p id="message"></p>
+    <script>
+        document.getElementById('captureButton').addEventListener('click', function() {
+            const serial = document.getElementById('serialInput').value;
+            fetch('/api/data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ input: serial })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    return fetch('/api/capture');
+                } else {
+                    throw new Error('Failed to send serial number');
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('message').innerText = data.message || data.error;
+            })
+            .catch(error => {
+                document.getElementById('message').innerText = 'Error: ' + error.message;
+            });
+        });
+    </script>
+</body>
+</html>
